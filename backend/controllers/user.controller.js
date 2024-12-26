@@ -35,11 +35,6 @@ module.exports.loginUser = async (req, res, next) => {
 
   const { email, password } = req.body;
 
-  const isUserAlready = await userModel.findOne({email});
-
-   if(isUserAlready){
-      return res.status(400).json({message : 'User already exist'});
-   }
   const user = await userModel.findOne({ email }).select('+password');
 
   if (!user) {
@@ -54,7 +49,7 @@ module.exports.loginUser = async (req, res, next) => {
 
   const token = user.generateAuthToken();
 
-  res.cookie('token', token)
+  res.cookie('token', token);
 
   res.status(200).json({ token, user });
 }
