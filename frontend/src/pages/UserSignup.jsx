@@ -36,6 +36,7 @@ const{ user , setUser} = useContext(UserDataContext)
      if(response.status === 201){
       const data = response.data
       setUser(data.user)
+      
       navigate('/home')
      }
        
