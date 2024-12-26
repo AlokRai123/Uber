@@ -31,7 +31,11 @@ function App() {
           <UserLogout/>
         </UserProtectWrapper>
       }/>
-      <Route path='/captain-home' element={<CaptainHome/>}/>
+      <Route path='/captain-home' element={
+        <UserProtectWrapper>
+          <CaptainHome/>
+        </UserProtectWrapper>
+      }/>
     </Routes >
    </div>
   )
