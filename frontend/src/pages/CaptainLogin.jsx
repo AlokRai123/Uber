@@ -3,9 +3,6 @@ import { Link ,useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { CaptainDataContext } from '../context/CaptainContext'
 
-
-
-
 const CaptainLogin = () => {
 
  const [email, setEmail] = useState('')
