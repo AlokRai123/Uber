@@ -12,6 +12,7 @@ const Home = () => {
   const [panelOpen,setPanelOpen] = useState(false);
   const panelRef = useRef(null)
   const panelCloseRef = useRef(null)
+  const [vehiclePanel, setvehiclePanel] = useState(false)
   const submitHandler = (e) =>{
     e.preventDefault();
   }
@@ -35,6 +36,8 @@ const Home = () => {
         })
        }
   },[panelOpen])
+
+  
 
   return (
     <div className='h-screen relative overflow-hidden '>
@@ -69,7 +72,7 @@ const Home = () => {
          </form>
         </div>
         <div ref={panelRef} className=' bg-white h-0'>
-             <LocationSearchPanel/>
+             <LocationSearchPanel vehiclePanel={vehiclePanel} setvehiclePanel={setvehiclePanel}/>
         </div>
       </div>
 
