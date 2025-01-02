@@ -7,6 +7,7 @@ import LocationSearchPanel from '../components/LocationSearchpanel';
 import VehiclePanel from '../components/VehiclePanel';
 import ConfirmRide from '../components/ConfirmRide';
 import LookingForDriver from '../components/LookingForDriver';
+import WaitingForDriver from '../components/WaitingForDriver';
 
 const Home = () => {
 
@@ -18,9 +19,11 @@ const Home = () => {
   const vehicleFoundRef = useRef(null)
   const panelRef = useRef(null)
   const panelCloseRef = useRef(null)
+  const WaitingForDriverRef = useRef(null)
   const [vehiclePanel, setVehiclePanel] = useState(false)
   const [confirmRidePanel, setConfirmRidePanel] = useState(false)
   const [vehicleFound, setVehicleFound] = useState(false)
+  const [waitingForDriver, setWaitingForDriver] = useState(false)
 
   const submitHandler = (e) =>{
     e.preventDefault();
@@ -84,6 +87,18 @@ const Home = () => {
     }
    },[vehicleFound])
 
+   useGSAP(function() {
+    if(waitingForDriver){
+      gsap.to(WaitingForDriverRef.current,{
+        transform : 'translateY(0)'
+      })
+    }else{
+      gsap.to(WaitingForDriverRef.current,{
+        transform : 'translateY(100%)'
+      })
+    }
+   },[waitingForDriver])
+
   return (
     <div className='h-screen relative overflow-hidden '>
       <img className=' w-16 absolute left-5 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
@@ -97,7 +112,7 @@ const Home = () => {
           <h5 ref={panelCloseRef} onClick={() => {setPanelOpen(false)}} className='absolute opacity-0 right-6 top-6 text-2xl'><i className="ri-arrow-down-wide-line"></i></h5>
         <h2 className='text-2xl font-semibold'>Find a trip</h2>
          <form onSubmit={(e) => {submitHandler(e)}}>
-            <div className="line absolute h-16  w-1 top-[35%] left-10  bg-gray-800 rounded-full"></div>
+            <div className="line absolute h-16  w-1 top-[47%] left-10  bg-gray-800 rounded-full"></div>
            <input 
            onClick={() => {setPanelOpen(true)}}
            value={pickup}
@@ -121,6 +136,9 @@ const Home = () => {
         </div>
       </div>
 
+
+
+              {/* here start confirmation of ride */}
       <div ref={vehiclePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
         <VehiclePanel setConfirmRidePanel={setConfirmRidePanel}  setVehiclePanel={setVehiclePanel}/>
       </div>
@@ -130,8 +148,14 @@ const Home = () => {
       </div>
 
       <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12'>
-        <LookingForDriver />
+        <LookingForDriver setVehicleFound={setVehicleFound}/>
       </div>
+
+      <div ref={WaitingForDriverRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12'>
+        <WaitingForDriver setWaitingForDriver={setWaitingForDriver}/>
+      </div>
+
+      
        
     </div>
   )
