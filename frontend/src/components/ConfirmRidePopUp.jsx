@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
+const ConfirmRidePopUp = (props) => {
 
-const RidePopUp = (props) => {
+    const [otp, setOtp] = useState('')
+
+    const submitHandler = (e) =>{
+        e.preventDefault();
+    }
+
   return (
-    <div>
-    <h5  className='p-2  text-center w-[93%] absolute top-0' onClick={() =>{props.setRidePopupPanel(false)}} ><i className="text-3xl text-gray-200 ri-arrow-down-wide-fill"></i></h5>
-    <h3 className='text-2xl font-semibold mb-2'>New Ride Available!</h3>
+    <div >
+    <h5  className='p-2  text-center w-[93%] absolute top-0' onClick={() =>{props.setConfirmRidePanel(false)}} ><i className="text-3xl text-gray-200 ri-arrow-down-wide-fill"></i></h5>
+    <h3 className='text-2xl font-semibold mb-2'>Confirm to this ride to start</h3>
 
     <div className='flex items-center justify-between p-3 bg-yellow-300 rounded-lg mt-4'>
         <div className='flex items-center gap-3 '>
@@ -41,16 +48,22 @@ const RidePopUp = (props) => {
        </div>
       </div>
     </div>
-      <button onClick={() => {
-        props.setConfirmRidePanel(true)
-      }} className='w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg'> Accept</button>
+    <div className='mt-6 w-full'>
+       <form onSubmit={(e) => {submitHandler(e)}}>
 
-<button onClick={() => {
-  props.setRidePopupPanel(false)
-      }} className='w-full mt-1 bg-gray-300 text-white font-semibold p-2 rounded-lg'> Ignore</button>
+       <input value={otp} onChange={(e)=>{setOtp(e.target.value)}} type="text" className='bg-[#eee] px-6 py-4 font-mono text-lg rounded-lg w-full mt-3 ' placeholder='Enter OTP' />
+
+       <Link to={'/captain-riding'} className=' w-full mt-5 text-lg flex justify-center bg-green-600 text-white font-semibold p-2 rounded-lg'> Confirm</Link>
+
+           <button onClick={() => {
+            props.setConfirmRidePanel(false)
+            props.setRidePopupPanel(false)
+            }} className='w-full mt-1 text-lg bg-red-600 text-white font-semibold p-2 rounded-lg'>Cancel</button>
+       </form>
+    </div>
     </div>
   </div>
   )
 }
 
-export default RidePopUp
+export default ConfirmRidePopUp
